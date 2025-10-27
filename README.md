@@ -87,6 +87,18 @@ To use xAI Grok-4-Fast, set `XAI_API_KEY` and select “xAI Grok-4-Fast” from 
 
 For GPT‑5 family with minimal reasoning, select either “OpenAI GPT‑5 (minimal reasoning)” or “OpenAI GPT‑5 Mini (minimal reasoning)”. These use the Responses API and `reasoning: {effort: "minimal"}`.
 
+### Ollama Local Models
+
+If you prefer to run fully locally through [Ollama](https://ollama.com/), start the Ollama daemon and pull the chat-tuned models you want to test (for example `ollama pull mistral` or `ollama pull llama3`). Then run:
+
+```bash
+python run_mfq_experiment_ollama.py --limit 5
+```
+
+The script queries the running Ollama instance (default `http://localhost:11434`), lists the available models, and streams persona-conditioned MFQ ratings to `data/<model>.csv`. Pass `--model <name>` to skip the interactive picker, `--base-url` if you are targeting a remote Ollama host, and adjust decoding with `--temperature`, `--max-tokens`, or `--timeout` as needed.
+
+> Make sure the Python client is installed (`pip install -r requirements.txt` or `pip install ollama`) so the runner can talk to the daemon.
+
 Key flags:
 
 - `--n`: number of times each persona answers a given MFQ item (default 10).
